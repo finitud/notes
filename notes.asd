@@ -8,5 +8,7 @@
   :depends-on (#:restas
 	       #:yaclml)
   :components ((:file "package")
+	       (:file "post")
+	       (:file "util")
                (:file "notes")))
 

@@ -1,3 +1,7 @@
+;;
+;; POST class to store posts
+;;
+
 (in-package #:notes)
 
 (defclass post ()
@@ -16,10 +20,11 @@
   (yaclml:with-yaclml-output-to-string
     (<:div :class "post"
 	   (<:h3 (<:format "#~a" (post-id post)))
-	   (<:h5 (<:format "[~a]" (post-timestamp post)))
-	   (<:p (<:format "~a" (post-text post))))))
+	   (<:p (<:format "~a" (post-text post)))
+	   (<:h6 (<:format "Posted on ~a" (format-date (post-timestamp post)))))))
 
 (defun add-post (text)
-  (vector-push-extend (make-instance 'post :text text
+  (vector-push-extend (make-instance 'post
+				     :text text
 				     :id (fill-pointer *posts*))
-  )
+		      *posts*))
