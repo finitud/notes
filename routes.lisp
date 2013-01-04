@@ -4,17 +4,15 @@
 
 (in-package #:notes)
 
-(define-route home ("/" :content-type "text/html")
-  (format nil "Hola mundo"))
+(define-route home ("")
+  (redirect 'all-posts))
 
-(define-route single-post ("post/:item"
-			   :content-type "text/html"
-			   :parse-vars (list :item #'parse-integer))
+(define-route single-post ("post/:item" :parse-vars (list :item #'parse-integer))
   (yaclml:with-yaclml-output-to-string
     (<:html (<:head (<:title (<:format "Post ~a" item)))
 	    (<:body (<:as-is (print-single-post item))))))
 
-(define-route all-posts ("posts" :content-type "text/html")
+(define-route all-posts ("posts" :method :get)
   (yaclml:with-yaclml-output-to-string
     (<:html (<:head (<:title "All posts"))
 	    (<:body (<:h1 "All posts")
